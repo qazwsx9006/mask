@@ -1,3 +1,77 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+div {
+  box-sizing: border-box;
+}
+
+#mapContainer {
+  height: 100%;
+  width: 100%;
+  padding-left: 400px;
+}
 #map {
-  height: 500px;
+  height: 100%;
+  width: 100%;
+}
+#dashboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  overflow: auto;
+}
+#info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+}
+#listContainer {
+  padding-top: 300px;
+  width: 100%;
+  height: 100%;
+}
+#list {
+  height: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#list li {
+  box-shadow: 0 0 3px #aaa;
+  padding: 5px;
+  cursor: pointer;
+}
+#list h6 {
+  margin: 0;
+  padding: 2px;
+  font-size: 1.2rem;
+}
+#list h6 span {
+  float: right;
+  font-size: 0.8rem;
+}
+.maskCountColumn {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+.maskCount {
+  padding: 1px;
+  font-size: 3rem;
+}
+#list h6:after,
+.maskCountBox:after {
+  content: "";
+  display: block;
+  clear: both;
 }

@@ -17,10 +17,40 @@
       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
       crossorigin=""
     ></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="./assets/index.css" />
   </head>
   <body>
-    <div id="map"></div>
+    <div id="mapContainer">
+      <div id="map"></div>
+    </div>
+    <div id="dashboard">
+      <div id="info"></div>
+      <div id="listContainer">
+        <ul id="list">
+          <li data-id="5901012203">
+            <h6>
+              載入中
+              <span>更新時間：......</span>
+            </h6>
+            <div class="maskCountBox">
+              <div class="maskCountColumn">
+                成人口罩
+                <div class="maskCount">
+                  載入中
+                </div>
+              </div>
+              <div class="maskCountColumn">
+                幼兒口罩
+                <div class="maskCount">
+                  載入中
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </body>
   <script src="./assets/map.js"></script>
 </html>

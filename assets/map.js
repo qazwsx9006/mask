@@ -41,6 +41,19 @@ const mymap = L.map("map", { center: latLng, zoom: 16, layers: [tiles] });
 
 const markers = {};
 mymap.panTo([25.049063, 121.554742]);
+
+// 取得地圖半徑 (km)
+var mapBoundNorthEast = mymap.getBounds().getNorthEast();
+var mapDistance = mapBoundNorthEast.distanceTo(mymap.getCenter());
+console.log(mapDistance / 1000);
+
+$("#list").html("");
+$("#list").on("click", "li", function(e) {
+  const code = $(this).attr("data-id");
+  const marker = markers[code];
+  mymap.panTo(marker.getLatLng());
+});
+
 for (data of fakeApiData) {
   const {
     code,
@@ -64,6 +77,23 @@ for (data of fakeApiData) {
   );
   markers[code] = marker;
   // marker.setPopupContent("<b>Hello world!</b><br>I am a popup.2222");
+  const listItem = `<li data-id="${code}">
+      <h6>
+        ${name}
+        <span>更新時間：${updatedAt}</span>
+      </h6>
+      <div class="maskCountBox">
+        <div class="maskCountColumn">
+          成人口罩
+          <div class="maskCount">${maskAdult}</div>
+        </div>
+        <div class="maskCountColumn">
+          幼兒口罩
+          <div class="maskCount">${maskChild}</div>
+        </div>
+      </div>
+    </li>`;
+  $("#list").append(listItem);
 }
 
 // var options = {
