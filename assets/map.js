@@ -1,3 +1,13 @@
+// socket
+
+const socket = io("https://socketio.weishianglian.com", {
+  transports: ["websocket"]
+});
+socket.on("connect", () => {
+  console.log("socket connect!");
+});
+// socket
+
 const fakeApiData = [
   {
     code: "5901012203",
@@ -37,47 +47,77 @@ const tiles = L.tileLayer(
 );
 const latLng = L.latLng(25.0479499, 121.5135961);
 const mymap = L.map("map", { center: latLng, zoom: 16, layers: [tiles] });
-// // mymap.locate({ setView: true, maxZoom: 16 });
 
 const markers = {};
-mymap.panTo([25.049063, 121.554742]);
-
-// 取得地圖半徑 (km)
-var mapBoundNorthEast = mymap.getBounds().getNorthEast();
-var mapDistance = mapBoundNorthEast.distanceTo(mymap.getCenter());
-console.log(mapDistance / 1000);
-
-$("#list").html("");
 $("#list").on("click", "li", function(e) {
   const code = $(this).attr("data-id");
   const marker = markers[code];
-  mymap.panTo(marker.getLatLng());
+  if (marker) {
+    mymap.panTo(marker.getLatLng());
+    marker.openPopup();
+  }
 });
 
-for (data of fakeApiData) {
-  const {
-    code,
-    name,
-    lng,
-    lat,
-    openTime,
-    note,
-    maskAdult,
-    maskChild,
-    updatedAt
-  } = data;
-  var marker = L.marker([lat, lng], {
-    myCustomId: "hello"
-  }).addTo(mymap);
-  marker.bindPopup(
-    `<b>${name}</b></br>
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+function success(pos) {
+  var crd = pos.coords;
+  mymap.panTo([crd.latitude, crd.longitude]);
+  getStores();
+  $("#search").on("click", getStores);
+}
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+  getStores();
+  $("#search").on("click", getStores);
+}
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+function getStores() {
+  const location = mymap.getCenter();
+  // 取得地圖半徑 (km)
+  const mapBoundNorthEast = mymap.getBounds().getNorthEast();
+  const mapDistance = mapBoundNorthEast.distanceTo(mymap.getCenter());
+  let distance = mapDistance / 1000;
+  console.log(distance);
+  if (distance > 5) distance = 5;
+  socket.emit(
+    "masks",
+    {
+      lat: location.lat,
+      lng: location.lng,
+      distance
+    },
+    data => {
+      updateStores(data);
+    }
+  );
+}
+
+function updateStores(stores) {
+  $("#list").html("");
+  for (const marker of Object.values(markers)) {
+    console.log(0, marker);
+    mymap.removeLayer(marker);
+  }
+  for (data of stores) {
+    const { code, name, lng, lat, openTime, note, maskAdult, maskChild } = data;
+    const updatedAt = new Date(data.updatedAt).toLocaleString();
+    var marker = L.marker([lat, lng], {
+      myCustomId: "hello"
+    }).addTo(mymap);
+    marker.bindPopup(
+      `<b>${name}</b></br>
         <span>更新時間：${updatedAt}</span></br>
         <span>成人口罩：${maskAdult}</span></br>
         <span>小孩口罩：${maskChild}</span>`
-  );
-  markers[code] = marker;
-  // marker.setPopupContent("<b>Hello world!</b><br>I am a popup.2222");
-  const listItem = `<li data-id="${code}">
+    );
+    markers[code] = marker;
+    // marker.setPopupContent("<b>Hello world!</b><br>I am a popup.2222");
+    const listItem = `<li data-id="${code}">
       <h6>
         ${name}
         <span>更新時間：${updatedAt}</span>
@@ -93,19 +133,6 @@ for (data of fakeApiData) {
         </div>
       </div>
     </li>`;
-  $("#list").append(listItem);
+    $("#list").append(listItem);
+  }
 }
-
-// var options = {
-//   enableHighAccuracy: true,
-//   timeout: 5000,
-//   maximumAge: 0
-// };
-// function success(pos) {
-//   var crd = pos.coords;
-//   mymap.panTo([crd.latitude, crd.longitude]);
-// }
-// function error(err) {
-//   console.warn(`ERROR(${err.code}): ${err.message}`);
-// }
-// navigator.geolocation.getCurrentPosition(success, error, options);

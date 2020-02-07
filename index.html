@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <meta property="og:title" content="口罩幫手"></meta>
+    <meta property="og:type" content="web"></meta>
+    <meta property="og:url" content="https://qazwsx9006.github.io/mask"></meta>
+    <meta property="og:image" content="https://qazwsx9006.github.io/mask/assets/metaImage.jpg"></meta>
+    <meta property="og:description" content="協助找口罩"></meta>
+    <meta property="og:site_name" content="口罩幫手"></meta>
+    <title>口罩幫手</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -18,6 +24,7 @@
       crossorigin=""
     ></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <link rel="stylesheet" href="./assets/index.css" />
   </head>
   <body>
@@ -25,7 +32,13 @@
       <div id="map"></div>
     </div>
     <div id="dashboard">
-      <div id="info"></div>
+      <div id="info">
+        <div class="button logo">logo</div>
+        <div class="button info">消息</div>
+        <div class="button search" id="search">搜尋</div>
+        <div class="button about">關於</div>
+      </div>
+
       <div id="listContainer">
         <ul id="list">
           <li data-id="5901012203">

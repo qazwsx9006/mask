@@ -33,6 +33,40 @@ div {
   width: 100%;
   height: 300px;
 }
+#info .button {
+  width: 50%;
+  height: 50%;
+  float: left;
+  text-align: center;
+  font-size: 2rem;
+  vertical-align: middle;
+  cursor: pointer;
+  opacity: 0.8;
+}
+#info .button:hover {
+  opacity: 1;
+}
+#info .button:before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+  background-color: #0f0;
+}
+.button.logo {
+  background-color: #fbefc4;
+}
+.button.info {
+  background-color: #52696f;
+}
+.button.search {
+  background-color: #e57b7f;
+}
+.button.about {
+  background-color: #88baa4;
+}
+
 #listContainer {
   padding-top: 300px;
   width: 100%;
@@ -45,6 +79,7 @@ div {
   list-style: none;
   margin: 0;
   padding: 0;
+  color: #555;
 }
 #list li {
   box-shadow: 0 0 3px #aaa;
