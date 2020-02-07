@@ -1,0 +1,33 @@
+@media screen and (max-width: 800px) {
+  #mapContainer {
+    padding-left: 0;
+    padding-bottom: 250px;
+  }
+  #dashboard {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 250px;
+  }
+  #info {
+    height: 80px;
+  }
+  #info .logo {
+    display: none;
+  }
+  #info .button {
+    width: 33.3333%;
+    height: 100%;
+  }
+
+  #listContainer {
+    padding-top: 80px;
+  }
+  #list h6 {
+    font-size: 1rem;
+  }
+  .maskCount {
+    padding: 1px;
+    font-size: 1.8rem;
+  }
+}

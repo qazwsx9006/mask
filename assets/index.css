@@ -17,6 +17,7 @@ div {
 #map {
   height: 100%;
   width: 100%;
+  box-shadow: 0 0 3px #999;
 }
 #dashboard {
   position: absolute;
@@ -32,6 +33,7 @@ div {
   left: 0;
   width: 100%;
   height: 300px;
+  box-shadow: 0 0 3px #999;
 }
 #info .button {
   width: 50%;
@@ -80,6 +82,7 @@ div {
   margin: 0;
   padding: 0;
   color: #555;
+  overflow: auto;
 }
 #list li {
   box-shadow: 0 0 3px #aaa;
