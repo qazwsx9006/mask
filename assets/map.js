@@ -100,7 +100,6 @@ function getStores() {
 function updateStores(stores) {
   $("#list").html("");
   for (const marker of Object.values(markers)) {
-    console.log(0, marker);
     mymap.removeLayer(marker);
   }
 
