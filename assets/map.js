@@ -103,9 +103,12 @@ function updateStores(stores) {
     console.log(0, marker);
     mymap.removeLayer(marker);
   }
+
   for (data of stores) {
     const { code, name, lng, lat, openTime, note, maskAdult, maskChild } = data;
-    const updatedAt = new Date(data.updatedAt).toLocaleString();
+    const updatedAt = convertUTCToLocalDateIgnoringTimezone(
+      new Date(data.updatedAt)
+    ).toLocaleString();
     var marker = L.marker([lat, lng], {
       myCustomId: "hello"
     }).addTo(mymap);
@@ -135,4 +138,16 @@ function updateStores(stores) {
     </li>`;
     $("#list").append(listItem);
   }
+}
+
+function convertUTCToLocalDateIgnoringTimezone(utcDate) {
+  return new Date(
+    utcDate.getUTCFullYear(),
+    utcDate.getUTCMonth(),
+    utcDate.getUTCDate(),
+    utcDate.getUTCHours(),
+    utcDate.getUTCMinutes(),
+    utcDate.getUTCSeconds(),
+    utcDate.getUTCMilliseconds()
+  );
 }

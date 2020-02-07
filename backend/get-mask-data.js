@@ -4,7 +4,7 @@ const fs = require("fs");
 const neatCsv = require("neat-csv");
 const https = require("https");
 
-async function parseStoreCSV() {
+async function fetchData() {
   const { Store } = models;
   const file = fs.createWriteStream("./maskdata.csv");
 
@@ -12,7 +12,8 @@ async function parseStoreCSV() {
     var stream = response.pipe(file);
 
     stream.on("finish", async function() {
-      console.log("done");
+      console.log("download done");
+      console.log("start insert");
       const r = fs.readFileSync("./maskdata.csv");
       const datas = await neatCsv(r);
       const dataChunks = _.chunk(datas, 20);
@@ -27,6 +28,7 @@ async function parseStoreCSV() {
             maskChild,
             updatedAt
           ] = _.values(store);
+          console.log("store id : " + code);
           let s = await Store.findById(code);
           if (!s) s = new Store({ _id: code });
           if (!s.name) s.name = name;
@@ -39,7 +41,7 @@ async function parseStoreCSV() {
         await Promise.all(r);
       }
       console.log("done");
+      setTimeout(fetchData, 600000);
     });
   });
 }
-parseStoreCSV();
