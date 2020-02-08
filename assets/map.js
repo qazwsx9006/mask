@@ -163,9 +163,9 @@ function convertUTCToLocalDateIgnoringTimezone(utcDate) {
   );
 }
 
-function toggleAbout() {
+$("#logo").on("click", function() {
   $("#about").toggle();
-}
+});
 $("#close").on("click", function() {
   $("#about").hide();
 });
