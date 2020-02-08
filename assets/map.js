@@ -72,7 +72,6 @@ function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
   getStores();
 }
-navigator.geolocation.getCurrentPosition(success, error, options);
 $("#locate").on("click", function() {
   // mymap.locate({ setView: true, maxZoom: 16 });
   navigator.geolocation.getCurrentPosition(success, error, options);
@@ -80,6 +79,7 @@ $("#locate").on("click", function() {
 $("#search").on("click", () => {
   getStores();
 });
+$("#locate").click();
 
 function getStores(geolocation = []) {
   console.log(geolocation);
@@ -162,3 +162,14 @@ function convertUTCToLocalDateIgnoringTimezone(utcDate) {
     utcDate.getUTCMilliseconds()
   );
 }
+
+function toggleAbout() {
+  $("#about").toggle();
+}
+$("#close").on("click", function() {
+  $("#about").hide();
+});
+
+$("#news").on("click", () => {
+  alert("開發中");
+});

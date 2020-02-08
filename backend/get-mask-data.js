@@ -41,7 +41,7 @@ async function fetchData() {
         await Promise.all(r);
       }
       console.log("done");
-      setTimeout(fetchData, 600000);
+      setTimeout(fetchData, 300000);
     });
   });
 }
