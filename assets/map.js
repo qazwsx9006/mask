@@ -60,29 +60,41 @@ $("#list").on("click", "li", function(e) {
 
 var options = {
   enableHighAccuracy: true,
-  timeout: 5000,
+  timeout: 15000,
   maximumAge: 0
 };
 function success(pos) {
   var crd = pos.coords;
   mymap.panTo([crd.latitude, crd.longitude]);
-  getStores();
-  $("#search").on("click", getStores);
+  getStores([crd.latitude, crd.longitude]);
 }
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
   getStores();
-  $("#search").on("click", getStores);
 }
 navigator.geolocation.getCurrentPosition(success, error, options);
+$("#locate").on("click", function() {
+  // mymap.locate({ setView: true, maxZoom: 16 });
+  navigator.geolocation.getCurrentPosition(success, error, options);
+});
+$("#search").on("click", () => {
+  getStores();
+});
 
-function getStores() {
-  const location = mymap.getCenter();
+function getStores(geolocation = []) {
+  console.log(geolocation);
+  const [lat, lng] = geolocation;
+  let location = mymap.getCenter();
+  if (lat && lng) {
+    location = {
+      lat,
+      lng
+    };
+  }
   // 取得地圖半徑 (km)
   const mapBoundNorthEast = mymap.getBounds().getNorthEast();
   const mapDistance = mapBoundNorthEast.distanceTo(mymap.getCenter());
   let distance = mapDistance / 1000;
-  console.log(distance);
   if (distance > 5) distance = 5;
   socket.emit(
     "masks",

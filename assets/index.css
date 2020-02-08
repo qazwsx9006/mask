@@ -48,16 +48,31 @@ div {
 #info .button:hover {
   opacity: 1;
 }
-#info .button:before {
+#info .button:before,
+.button.logo a:before {
   content: "";
   display: inline-block;
+  margin-left: -5px;
   width: 0;
   height: 100%;
   vertical-align: middle;
   background-color: #0f0;
 }
+#info .logo:before {
+  display: none;
+}
 .button.logo {
   background-color: #fbefc4;
+}
+.button.logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.button.logo img {
+  max-width: 90%;
+  max-height: 90%;
+  vertical-align: middle;
 }
 .button.info {
   background-color: #52696f;
@@ -65,7 +80,7 @@ div {
 .button.search {
   background-color: #e57b7f;
 }
-.button.about {
+.button.locate {
   background-color: #88baa4;
 }
 

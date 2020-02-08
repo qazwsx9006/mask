@@ -12,8 +12,17 @@
   #info {
     height: 80px;
   }
-  #info .logo {
-    display: none;
+  #info .button.logo {
+    display: block;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    margin-left: -40px;
+    top: 0;
+    left: 50%;
+    z-index: 999;
+    background-color: transparent;
+    opacity: 1;
   }
   #info .button {
     width: 33.3333%;
