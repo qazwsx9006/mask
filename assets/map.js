@@ -79,7 +79,7 @@ $("#locate").on("click", function() {
 $("#search").on("click", () => {
   getStores();
 });
-$("#locate").click();
+// $("#locate").click();
 
 function getStores(geolocation = []) {
   console.log(geolocation);
@@ -163,6 +163,23 @@ function convertUTCToLocalDateIgnoringTimezone(utcDate) {
   );
 }
 
+function buyCondition() {
+  const weekDay = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
+  ).getDay();
+  let conditionHtml = "";
+  if (weekDay === 0) {
+    conditionHtml = "不限";
+  } else if (weekDay % 2 === 0) {
+    conditionHtml = "偶數 <span>(0,2,4,6,8)</span>";
+  } else {
+    conditionHtml = "奇數 <span>(1,3,5,7,9)</span>";
+  }
+
+  $("#condition").html(conditionHtml);
+}
+buyCondition();
+
 $("#logo").on("click", function() {
   $("#about").toggle();
 });
@@ -172,4 +189,11 @@ $("#close").on("click", function() {
 
 $("#news").on("click", () => {
   alert("開發中");
+});
+$("#note").on("click", function(e) {
+  if (e.target.id === "note" || e.target.id === "closeNote") {
+    $(this).addClass("small");
+  } else {
+    $(this).removeClass("small");
+  }
 });
