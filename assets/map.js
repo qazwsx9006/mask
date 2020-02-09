@@ -79,7 +79,7 @@ $("#locate").on("click", function() {
 $("#search").on("click", () => {
   getStores();
 });
-// $("#locate").click();
+$("#locate").click();
 
 function getStores(geolocation = []) {
   console.log(geolocation);
