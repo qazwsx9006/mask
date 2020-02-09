@@ -60,7 +60,7 @@ $("#list").on("click", "li", function(e) {
 
 var options = {
   enableHighAccuracy: true,
-  timeout: 15000,
+  timeout: 8000,
   maximumAge: 0
 };
 function success(pos) {
@@ -116,25 +116,46 @@ function updateStores(stores) {
   }
 
   for (data of stores) {
-    const { code, name, lng, lat, openTime, note, maskAdult, maskChild } = data;
+    const {
+      code,
+      name,
+      lng,
+      lat,
+      openTime,
+      note,
+      maskAdult,
+      maskChild,
+      condition = {}
+    } = data;
+    const { number } = condition;
+    let tag = "";
+    let conditionMsg = "";
+    if (number) {
+      tag = '<span class="tag">號碼牌</span>';
+      conditionMsg = `</br><span>* ${number}</span>`;
+    }
     const updatedAt = convertUTCToLocalDateIgnoringTimezone(
       new Date(data.updatedAt)
     ).toLocaleString();
     var marker = L.marker([lat, lng], {
       myCustomId: "hello"
     }).addTo(mymap);
+
     marker.bindPopup(
       `<b>${name}</b></br>
         <span>更新時間：${updatedAt}</span></br>
         <span>成人口罩：${maskAdult}</span></br>
-        <span>小孩口罩：${maskChild}</span>`
+        <span>小孩口罩：${maskChild}</span>
+        ${conditionMsg}
+      `
     );
     markers[code] = marker;
     // marker.setPopupContent("<b>Hello world!</b><br>I am a popup.2222");
     const listItem = `<li data-id="${code}">
       <h6>
         ${name}
-        <span>更新時間：${updatedAt}</span>
+        ${tag}
+        <span class="updatedAt">更新時間：${updatedAt}</span>
       </h6>
       <div class="maskCountBox">
         <div class="maskCountColumn">

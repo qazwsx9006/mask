@@ -109,7 +109,14 @@ div {
   padding: 2px;
   font-size: 1.2rem;
 }
-#list h6 span {
+#list h6 span.tag {
+  font-size: 0.8rem;
+  background-color: #d9edf7;
+  color: #31708f;
+  padding: 3px 5px;
+  border-radius: 0.8rem;
+}
+#list h6 span.updatedAt {
   float: right;
   font-size: 0.8rem;
 }

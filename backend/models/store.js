@@ -10,6 +10,7 @@ const getModels = function() {
     note: { type: String },
     maskAdult: { type: Number, default: 0 },
     maskChild: { type: Number, default: 0 },
+    condition: { type: Object },
     location: {
       type: {
         type: String,
