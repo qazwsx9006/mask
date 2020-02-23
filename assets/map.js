@@ -5,6 +5,9 @@ const socket = io("https://socketio.weishianglian.com", {
 });
 socket.on("connect", () => {
   console.log("socket connect!");
+  socket.on("maskAlert", data => {
+    alert(data);
+  });
 });
 // socket
 
