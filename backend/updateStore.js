@@ -15,7 +15,6 @@ async function fetchData() {
     res.on("end", async () => {
       const data = JSON.parse(body);
       const { features } = data;
-      const f = features.find(f => f.properties.id === "5901012767");
       for (let feature of features) {
         const { type, properties, geometry } = feature;
         const {
@@ -51,8 +50,7 @@ async function fetchData() {
           };
         }
         if (!s.validateSync()) {
-          console.log(s);
-          return s.save();
+          await s.save();
         } else {
           console.log(feature);
         }

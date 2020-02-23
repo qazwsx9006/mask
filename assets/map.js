@@ -127,12 +127,15 @@ function updateStores(stores) {
       maskChild,
       condition = {}
     } = data;
-    const { number } = condition;
+    const { number, common } = condition;
     let tag = "";
     let conditionMsg = "";
     if (number) {
       tag = '<span class="tag">號碼牌</span>';
       conditionMsg = `</br><span>* ${number}</span>`;
+    }
+    if (common) {
+      conditionMsg = `</br><span>* ${common}</span>`;
     }
     const updatedAt = convertUTCToLocalDateIgnoringTimezone(
       new Date(data.updatedAt)
