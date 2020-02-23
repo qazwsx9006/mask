@@ -5,9 +5,17 @@ const neatCsv = require("neat-csv");
 const https = require("https");
 
 async function fetchData() {
+  const currentHour = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
+  ).getHours();
+  if (currentHour >= 23 || currentHour < 7) {
+    setTimeout(fetchData, 300000);
+    return;
+  }
+
   const { Store } = models;
   const file = fs.createWriteStream("./maskdata.csv");
-
+  console.log(`${new Date()}: start fetch maskData`);
   https.get("https://data.nhi.gov.tw/resource/mask/maskdata.csv", response => {
     var stream = response.pipe(file);
 
@@ -28,7 +36,6 @@ async function fetchData() {
             maskChild,
             updatedAt
           ] = _.values(store);
-          console.log("store id : " + code);
           let s = await Store.findById(code);
           if (!s) s = new Store({ _id: code });
           if (!s.name) s.name = name;
@@ -36,11 +43,15 @@ async function fetchData() {
           s.maskAdult = maskAdult;
           s.maskChild = maskChild;
           s.updatedAt = updatedAt;
-          return s.save();
+          if (!s.validateSync()) {
+            return s.save();
+          } else {
+            console.log(store);
+          }
         });
         await Promise.all(r);
       }
-      console.log("done");
+      console.log(`${new Date()} done`);
       setTimeout(fetchData, 300000);
     });
   });

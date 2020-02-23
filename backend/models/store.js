@@ -7,6 +7,7 @@ const getModels = function() {
     name: { type: String, required: true },
     openTime: { type: String },
     address: { type: String },
+    servicePeriods: { type: String },
     note: { type: String },
     maskAdult: { type: Number, default: 0 },
     maskChild: { type: Number, default: 0 },
