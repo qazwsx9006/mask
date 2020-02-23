@@ -51,7 +51,7 @@
         <div class="button logo">
           <a href="javascript:;" id="logo"><img src="./assets/images/mask.png" alt="logo"></a>
         </div>
-        <div class="button news" id="news">消息</div>
+        <div class="button news" id="newsList">消息</div>
         <div class="button search" id="search">搜尋</div>
         <div class="button locate" id="locate">定位</div>
       </div>
@@ -84,7 +84,7 @@
     </div>
     <div id="about">
       <div class="container">
-        <div id="close">Ｘ</div>
+        <div id="close" class="close">Ｘ</div>
         <h5>關於本站</h5>
         <p>
           開發者： <a href="https://www.facebook.com/qazwsx9006">Ming Yu Tseng</a>、<a href="https://www.facebook.com/hsienchung.lin.9">Hsien Chung Lin</a> <br/>
@@ -109,6 +109,50 @@
       </div>
     </div>
 
+    <div id="news">
+      <div class="container">
+        <div id="closeNews" class="close">Ｘ</div>
+        <ul class="msgWindow">
+          <li style="height:1rem;"></li>
+          <!-- <li>
+            <div class="avatar">
+              幫手
+            </div>
+            <div class="msgBubble">
+              <div class="bubble">
+                <img src="" alt="">
+              </div>
+            </div>
+          </li> -->
+          
+        </ul>
+      </div>
+    </div>
+
   </body>
   <script src="./assets/map.js"></script>
+  <script>
+    imageLists = [
+      'https://i.imgur.com/cP2ru0G.jpg',
+      'https://i.imgur.com/QNl3Yh7.jpg',
+      'https://i.imgur.com/LMdfruc.jpg',
+      'https://i.imgur.com/ob4nIJU.jpg'
+    ]
+
+    for(let imageUrl of imageLists){
+      const li = `<li>
+            <div class="avatar">
+              幫手
+            </div>
+            <div class="msgBubble">
+              <div class="bubble">
+                <img src="${imageUrl}" alt="">
+              </div>
+            </div>
+          </li>`
+      $('.msgWindow').append(li)
+    }
+    
+
+  </script>
 </html>

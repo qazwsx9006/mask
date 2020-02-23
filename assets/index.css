@@ -158,7 +158,7 @@ div {
   box-shadow: 0 0 5px #666;
   padding: 10px;
 }
-#close {
+.close {
   display: inline-block;
   background-color: #f00;
   color: #fff;
@@ -243,4 +243,99 @@ div {
 }
 #note.small #closeNote {
   display: none;
+}
+
+#news {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  text-align: center;
+  transition: 0.6s;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#news .container {
+  margin-top: 2%;
+  background: #fff;
+  width: 100%;
+  height: 95%;
+  max-width: 500px;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #666;
+  padding: 10px;
+  position: relative;
+}
+.msgWindow {
+  height: 100%;
+  overflow: auto;
+  background-color: #d9edf7;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 3px #bce8f1;
+  color: #31708f;
+  box-sizing: border-box;
+  margin: 0;
+  list-style: none;
+}
+#closeNews {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  z-index: 10;
+}
+.msgWindow li {
+  position: relative;
+  vertical-align: middle;
+  margin-top: 10px;
+}
+.msgWindow .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+  background: #5e5eb5;
+  color: #eee;
+}
+.msgWindow .avatar:before {
+  letter-spacing: -4px;
+  content: "";
+  display: inline-block;
+  width: 0;
+  margin-left: -6px;
+  height: 100%;
+  vertical-align: middle;
+}
+.msgBubble {
+  width: 100%;
+  padding: 0 30px 0 80px;
+}
+.bubble {
+  min-height: 50px;
+  background-color: #5f9ea0;
+  border-radius: 5px;
+  padding: 5px;
+  position: relative;
+  text-align: left;
+}
+.bubble:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent #5f9ea0 transparent transparent;
+  border-style: solid;
+  border-width: 10px 15px 10px 5px;
+  position: absolute;
+  top: 15px;
+  right: 100%;
+}
+.msgBubble img {
+  width: 100%;
 }

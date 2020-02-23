@@ -99,6 +99,7 @@ function getStores(geolocation = []) {
   const mapDistance = mapBoundNorthEast.distanceTo(mymap.getCenter());
   let distance = mapDistance / 1000;
   if (distance > 5) distance = 5;
+  console.log({ lat: location.lat, lng: location.lng, distance });
   socket.emit(
     "masks",
     {
@@ -214,13 +215,17 @@ $("#close").on("click", function() {
   $("#about").hide();
 });
 
-$("#news").on("click", () => {
-  alert("開發中");
-});
 $("#note").on("click", function(e) {
   if (e.target.id === "note" || e.target.id === "closeNote") {
     $(this).addClass("small");
   } else {
     $(this).removeClass("small");
   }
+});
+
+$("#newsList").on("click", function() {
+  $("#news").show();
+});
+$("#closeNews").on("click", function() {
+  $("#news").hide();
 });
