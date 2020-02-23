@@ -36,7 +36,8 @@ const getModels = function() {
       }
     },
     createdAt: { type: Date, default: Date.now, required: true },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
+    saleLog: { type: Object, default: {} }
   };
   let schema = new mongoose.Schema(definition);
 

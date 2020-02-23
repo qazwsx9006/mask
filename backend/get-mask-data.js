@@ -40,6 +40,17 @@ async function fetchData() {
           if (!s) s = new Store({ _id: code });
           if (!s.name) s.name = name;
           if (!s.address) s.address = address;
+          if (s.maskAdult > maskAdult) {
+            let currentSales = s.saleLog[currentHour] || 0;
+            currentSales += s.maskAdult - maskAdult;
+            s.saleLog[currentHour] = currentSales;
+            if (maskAdult == 0) s.saleLog["soldOut"] = currentHour;
+            s.markModified("saleLog");
+          }
+          if (maskAdult > s.maskAdult) {
+            s.saleLog["add"] = currentHour;
+            s.markModified("saleLog");
+          }
           s.maskAdult = maskAdult;
           s.maskChild = maskChild;
           s.updatedAt = updatedAt;
