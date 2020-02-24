@@ -48,7 +48,7 @@ async function fetchData() {
               s.saleLog[currentWeekDay][currentHour] || 0;
             s.saleLog[currentWeekDay][currentHour] += s.maskAdult - maskAdult;
             s.saleLog["near"] = {
-              time: new Date(),
+              time: new Date().getTime(),
               number: s.maskAdult - maskAdult
             };
             if (maskAdult == 0)
