@@ -146,9 +146,17 @@ function updateStores(stores) {
       note,
       maskAdult,
       maskChild,
-      condition = {}
+      condition = {},
+      saleLog = {}
     } = data;
     const { number, common } = condition;
+    const near = saleLog.near || {};
+    const { time: nearTime, number: nearNumber } = near;
+    let nearSaleLog = 0;
+    const now = new Date().getTime();
+    if (nearTime && (now - nearTime) / 1000 < 600) {
+      nearSaleLog = nearNumber || 0;
+    }
     let tag = "";
     let conditionMsg = "";
     if (number) {
@@ -201,6 +209,10 @@ function updateStores(stores) {
         <div class="maskCountColumn">
           幼兒口罩
           <div class="maskCount">${maskChild}</div>
+        </div>
+        <div class="maskCountColumn saleLog">
+          10分鐘內銷售
+          <div class="maskCount">${nearSaleLog}</div>
         </div>
       </div>
     </li>`;

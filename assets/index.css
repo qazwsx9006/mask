@@ -122,7 +122,7 @@ div {
 }
 .maskCountColumn {
   float: left;
-  width: 50%;
+  width: 35%;
   text-align: center;
 }
 .maskCount {
@@ -342,4 +342,8 @@ div {
 
 .disable {
   background: #dfdfdf;
+}
+
+.saleLog {
+  width: 30%;
 }
