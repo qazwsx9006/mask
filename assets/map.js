@@ -162,7 +162,7 @@ function updateStores(stores) {
       new Date(data.updatedAt)
     ).toLocaleString();
     var marker = L.marker([lat, lng], {
-      icon: greyIcon,
+      icon: blueIcon,
       myCustomId: code
     }).addTo(mymap);
     marker.on("click", function() {
