@@ -43,7 +43,11 @@ async function fetchData() {
           if (note.match(/號碼/)) key = "number";
           s.condition = { [key]: note };
         }
-        if (!s.location || !s.location.coordinates) {
+        if (
+          !s.location ||
+          !s.location.coordinates ||
+          !s.location.coordinates[0]
+        ) {
           s.location = {
             type: "Point",
             coordinates: [lng, lat]

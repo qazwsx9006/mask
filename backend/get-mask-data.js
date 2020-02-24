@@ -5,9 +5,11 @@ const neatCsv = require("neat-csv");
 const https = require("https");
 
 async function fetchData() {
-  const currentHour = new Date(
+  const currentDate = new Date(
     new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
-  ).getHours();
+  );
+  const currentHour = currentDate.getHours();
+  const currentWeekDay = currentDate.getDay();
   if (currentHour >= 23 || currentHour < 7) {
     setTimeout(fetchData, 300000);
     return;
@@ -41,14 +43,21 @@ async function fetchData() {
           if (!s.name) s.name = name;
           if (!s.address) s.address = address;
           if (s.maskAdult > maskAdult) {
-            let currentSales = s.saleLog[currentHour] || 0;
-            currentSales += s.maskAdult - maskAdult;
-            s.saleLog[currentHour] = currentSales;
-            if (maskAdult == 0) s.saleLog["soldOut"] = currentHour;
+            s.saleLog[currentWeekDay] = s.saleLog[currentWeekDay] || {};
+            s.saleLog[currentWeekDay][currentHour] =
+              s.saleLog[currentWeekDay][currentHour] || 0;
+            s.saleLog[currentWeekDay][currentHour] += s.maskAdult - maskAdult;
+
+            if (maskAdult == 0)
+              s.saleLog[currentWeekDay]["soldOut"] = currentHour;
             s.markModified("saleLog");
           }
           if (maskAdult > s.maskAdult) {
-            s.saleLog["add"] = currentHour;
+            s.saleLog[currentWeekDay] = s.saleLog[currentWeekDay] || {};
+            s.saleLog[currentWeekDay]["add"] = {
+              currentHour,
+              number: maskAdult - s.maskAdult
+            };
             s.markModified("saleLog");
           }
           s.maskAdult = maskAdult;
