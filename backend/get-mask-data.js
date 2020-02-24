@@ -47,7 +47,10 @@ async function fetchData() {
             s.saleLog[currentWeekDay][currentHour] =
               s.saleLog[currentWeekDay][currentHour] || 0;
             s.saleLog[currentWeekDay][currentHour] += s.maskAdult - maskAdult;
-
+            s.saleLog["near"] = {
+              time: new Date(),
+              number: s.maskAdult - maskAdult
+            };
             if (maskAdult == 0)
               s.saleLog[currentWeekDay]["soldOut"] = currentHour;
             s.markModified("saleLog");
