@@ -339,3 +339,7 @@ div {
 .msgBubble img {
   width: 100%;
 }
+
+.disable {
+  background: #dfdfdf;
+}

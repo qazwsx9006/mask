@@ -160,9 +160,12 @@ function updateStores(stores) {
     }
     const updatedAt = convertUTCToLocalDateIgnoringTimezone(
       new Date(data.updatedAt)
-    ).toLocaleString();
+    );
+    let outDate = false;
+    if ((new Date() - updatedAt) / 1000 > 60 * 60 * 24) outDate = true;
+
     var marker = L.marker([lat, lng], {
-      icon: blueIcon,
+      icon: outDate ? greyIcon : blueIcon,
       myCustomId: code
     }).addTo(mymap);
     marker.on("click", function() {
@@ -176,7 +179,7 @@ function updateStores(stores) {
 
     marker.bindPopup(
       `<b>${name}</b></br>
-        <span>更新時間：${updatedAt}</span></br>
+        <span>更新時間：${updatedAt.toLocaleString()}</span></br>
         <span>成人口罩：${maskAdult}</span></br>
         <span>小孩口罩：${maskChild}</span>
         ${conditionMsg}
@@ -184,11 +187,11 @@ function updateStores(stores) {
     );
     markers[code] = marker;
     // marker.setPopupContent("<b>Hello world!</b><br>I am a popup.2222");
-    const listItem = `<li data-id="${code}">
+    const listItem = `<li data-id="${code}" class="${outDate ? "disable" : ""}">
       <h6>
         ${name}
         ${tag}
-        <span class="updatedAt">更新時間：${updatedAt}</span>
+        <span class="updatedAt">更新時間：${updatedAt.toLocaleString()}</span>
       </h6>
       <div class="maskCountBox">
         <div class="maskCountColumn">
