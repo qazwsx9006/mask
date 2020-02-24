@@ -50,6 +50,22 @@ const tiles = L.tileLayer(
 );
 const latLng = L.latLng(25.0479499, 121.5135961);
 const mymap = L.map("map", { center: latLng, zoom: 16, layers: [tiles] });
+const blueIcon = new L.Icon({
+  iconUrl: "./assets/images/marker-icon-2x-blue.png",
+  shadowUrl: "./assets/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+const greyIcon = new L.Icon({
+  iconUrl: "./assets/images/marker-icon-2x-grey.png",
+  shadowUrl: "./assets/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 const markers = {};
 $("#list").on("click", "li", function(e) {
@@ -120,6 +136,7 @@ function updateStores(stores) {
   }
 
   for (data of stores) {
+    console.log(data);
     const {
       code,
       name,
@@ -145,8 +162,17 @@ function updateStores(stores) {
       new Date(data.updatedAt)
     ).toLocaleString();
     var marker = L.marker([lat, lng], {
-      myCustomId: "hello"
+      // icon: greyIcon,
+      myCustomId: code
     }).addTo(mymap);
+    marker.on("click", function() {
+      const myCustomId = this.options.myCustomId;
+      $("#list").animate({
+        scrollTop:
+          $(`#list li[data-id=${myCustomId}]`).position().top -
+          $("#list li:first").position().top
+      });
+    });
 
     marker.bindPopup(
       `<b>${name}</b></br>
