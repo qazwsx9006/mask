@@ -185,12 +185,43 @@ function updateStores(stores) {
       });
     });
 
+    const currentDate = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
+    );
+    const currentHour = currentDate.getHours();
+    const currentDay = currentDate.getDay();
+    const saleLogs = saleLog[currentDay] || {};
+    let todayLogs = {};
+    let logs = { max: 0, startHour: 8, endHour: 8 };
+    Object.keys(saleLogs).map(hour => {
+      if (hour < currentHour) {
+        if (logs.endHour < hour) logs.endHour = parseInt(hour);
+        todayLogs[hour] = saleLogs[hour];
+      }
+    });
+    if (logs.endHour - 8 > 8) logs.startHour = logs.endHour - 7;
+    let chartLis = "";
+    for (let i = 0; i <= 7; i++) {
+      const hour = i + logs.startHour;
+      let number = todayLogs[hour] || 0;
+      if (logs.max < number) logs.max = number;
+    }
+    for (let i = 0; i <= 7; i++) {
+      const hour = i + logs.startHour;
+      let number = todayLogs[hour] || 0;
+      let height = (number / logs.max) * 100 || 0;
+      chartLis += `<li style="height: ${height}%;"><span title="${hour}"></span></li>`;
+    }
     marker.bindPopup(
       `<b>${name}</b></br>
         <span>更新時間：${updatedAt.toLocaleString()}</span></br>
         <span>成人口罩：${maskAdult}</span></br>
         <span>小孩口罩：${maskChild}</span>
         ${conditionMsg}
+        <div><成人口罩最近銷售情形></div>
+        <ul class="chart" title="${logs.max}">
+          ${chartLis}
+        </ul>
       `
     );
     markers[code] = marker;
