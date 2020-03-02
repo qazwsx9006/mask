@@ -199,7 +199,7 @@ function updateStores(stores) {
         todayLogs[hour] = saleLogs[hour];
       }
     });
-    if (logs.endHour - 8 > 8) logs.startHour = logs.endHour - 7;
+    if (logs.endHour - 8 >= 8) logs.startHour = logs.endHour - 7;
     let chartLis = "";
     for (let i = 0; i <= 7; i++) {
       const hour = i + logs.startHour;
