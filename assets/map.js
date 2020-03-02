@@ -193,8 +193,10 @@ function updateStores(stores) {
     const saleLogs = saleLog[currentDay] || {};
     let todayLogs = {};
     let logs = { max: 0, startHour: 8, endHour: 8 };
+    let targetHour = currentHour;
+    if (new Date(nearTime).getHours() == targetHour) targetHour++;
     Object.keys(saleLogs).map(hour => {
-      if (hour < currentHour) {
+      if (hour < targetHour) {
         if (logs.endHour < hour) logs.endHour = parseInt(hour);
         todayLogs[hour] = saleLogs[hour];
       }
