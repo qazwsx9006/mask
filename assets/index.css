@@ -228,7 +228,7 @@ div {
   cursor: pointer;
 }
 #note.small h5,
-#note.small p {
+#note.small .content {
   display: none;
 }
 #note.small h4 {
