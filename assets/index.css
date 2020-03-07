@@ -440,3 +440,23 @@ div {
     box-shadow: 0 0 0px 0px rgba(0, 162, 255, 1);
   }
 }
+
+#newsList span {
+  position: relative;
+  display: inline-block;
+}
+#newsList .tipLight.close {
+  display: none;
+}
+#newsList .tipLight {
+  background: rgb(42, 245, 245);
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 5px rgba(82, 179, 235, 0.8);
+  animation: userIcon 1s ease-out 0s infinite alternate;
+}

@@ -309,9 +309,6 @@ $("#note").on("click", function(e) {
   }
 });
 
-$("#newsList").on("click", function() {
-  $("#news").show();
-});
 $("#closeNews").on("click", function() {
   $("#news").hide();
 });
