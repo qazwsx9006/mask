@@ -3,6 +3,11 @@ const models = require("./models");
 const fs = require("fs");
 const neatCsv = require("neat-csv");
 const https = require("https");
+const { Store, SaleLog } = models;
+
+let nowDate = new Date(
+  new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
+).getDate();
 
 async function fetchData() {
   const currentDate = new Date(
@@ -10,12 +15,16 @@ async function fetchData() {
   );
   const currentHour = currentDate.getHours();
   const currentWeekDay = currentDate.getDay();
+  const todayDate = currentDate.getDate();
+  if (nowDate !== todayDate) {
+    nowDate = todayDate;
+    await saleLogUpdate(currentDate);
+  }
   if (currentHour >= 23 || currentHour < 7) {
     setTimeout(fetchData, 300000);
     return;
   }
 
-  const { Store } = models;
   const file = fs.createWriteStream("./maskdata.csv");
   console.log(`${new Date()}: start fetch maskData`);
   https.get("https://data.nhi.gov.tw/resource/mask/maskdata.csv", response => {
@@ -61,7 +70,14 @@ async function fetchData() {
               currentHour,
               number: maskAdult - s.maskAdult
             };
+
+            s.addLog[currentWeekDay] = s.addLog[currentWeekDay] || {};
+            s.addLog[currentWeekDay][currentHour] =
+              s.addLog[currentWeekDay][currentHour] || 0;
+            s.addLog[currentWeekDay][currentHour] += maskAdult - s.maskAdult;
+
             s.markModified("saleLog");
+            s.markModified("addLog");
           }
           s.maskAdult = maskAdult;
           s.maskChild = maskChild;
@@ -80,3 +96,27 @@ async function fetchData() {
   });
 }
 fetchData();
+
+async function saleLogUpdate(currentDate) {
+  console.log(`${new Date()}: start update saleLog`);
+  const stores = await Store.find();
+  const yesterday = new Date();
+  yesterday.setDate(currentDate.getDate() - 1);
+  const yesterdayWeekDay = yesterday.getDay();
+  const month = yesterday.getMonth() + 1;
+  for (const store of stores) {
+    const query = { store: store._id, month };
+    const log = (await SaleLog.findOne(query)) || new SaleLog(query);
+    if (!_.isEmpty(store.saleLog[yesterdayWeekDay]))
+      log.saleLog[yesterday.getDate()] = store.saleLog[yesterdayWeekDay] || {};
+    if (!_.isEmpty(store.addLog[yesterdayWeekDay]))
+      log.addLog[yesterday.getDate()] = store.addLog[yesterdayWeekDay] || {};
+    await log.save();
+    store.saleLog[yesterdayWeekDay] = {};
+    store.addLog[yesterdayWeekDay] = {};
+    store.markModified("saleLog");
+    store.markModified("addLog");
+    await store.save();
+  }
+  console.log(`${new Date()}: done update saleLog`);
+}
