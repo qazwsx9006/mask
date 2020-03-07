@@ -40,7 +40,8 @@ async function fetchData() {
         if (condition && condition !== "-") {
           let key = "common";
 
-          if (note.match(/號碼/)) key = "number";
+          if (note.match(/號碼/) && !note.match(/沒有?發?放?號碼/))
+            key = "number";
           s.condition = { [key]: note };
         }
         if (
