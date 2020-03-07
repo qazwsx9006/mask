@@ -66,7 +66,13 @@ const greyIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+const locateIcon = new L.divIcon({
+  className: "user-icon",
+  html: "<div class='user-icon-marker'></div>",
+  iconSize: [30, 30]
+});
 
+let userMarker;
 const markers = {};
 $("#list").on("click", "li", function(e) {
   const code = $(this).attr("data-id");
@@ -84,6 +90,12 @@ var options = {
 };
 function success(pos) {
   var crd = pos.coords;
+  if (userMarker) mymap.removeLayer(userMarker);
+  userMarker = L.marker([crd.latitude, crd.longitude], {
+    icon: locateIcon,
+    myCustomId: "user"
+  }).addTo(mymap);
+
   mymap.panTo([crd.latitude, crd.longitude]);
   getStores([crd.latitude, crd.longitude]);
 }

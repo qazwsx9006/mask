@@ -408,3 +408,35 @@ div {
   content: attr(title);
   word-wrap: break-word;
 }
+
+.user-icon {
+  font-size: 0;
+  text-align: center;
+}
+.user-icon:before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+.user-icon-marker {
+  background-color: rgba(0, 162, 255, 1);
+  display: inline-block;
+  width: 50%;
+  height: 50%;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 1px solid rgb(0, 115, 182);
+  box-shadow: 0 0 5px 5px rgba(82, 179, 235, 0.8);
+  animation: userIcon 1s ease-out 0s infinite alternate;
+}
+
+@keyframes userIcon {
+  from {
+    box-shadow: 0 0 5px 5px rgba(82, 179, 235, 0.6);
+  }
+  to {
+    box-shadow: 0 0 0px 0px rgba(0, 162, 255, 1);
+  }
+}
