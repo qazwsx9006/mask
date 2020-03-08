@@ -19,7 +19,6 @@ async function fetchData() {
   if (nowDate !== todayDate) {
     nowDate = todayDate;
     await saleLogUpdate(currentDate);
-    setTimeout(fetchData, 300000);
   }
   if (currentHour >= 23 || currentHour < 7) {
     setTimeout(fetchData, 300000);
