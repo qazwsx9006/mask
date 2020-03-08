@@ -19,6 +19,7 @@ async function fetchData() {
   if (nowDate !== todayDate) {
     nowDate = todayDate;
     await saleLogUpdate(currentDate);
+    setTimeout(fetchData, 300000);
   }
   if (currentHour >= 23 || currentHour < 7) {
     setTimeout(fetchData, 300000);
@@ -107,10 +108,14 @@ async function saleLogUpdate(currentDate) {
   for (const store of stores) {
     const query = { store: store._id, month };
     const log = (await SaleLog.findOne(query)) || new SaleLog(query);
-    if (!_.isEmpty(store.saleLog[yesterdayWeekDay]))
+    if (!_.isEmpty(store.saleLog[yesterdayWeekDay])) {
       log.saleLog[yesterday.getDate()] = store.saleLog[yesterdayWeekDay] || {};
-    if (!_.isEmpty(store.addLog[yesterdayWeekDay]))
+      log.markModified("saleLog");
+    }
+    if (!_.isEmpty(store.addLog[yesterdayWeekDay])) {
       log.addLog[yesterday.getDate()] = store.addLog[yesterdayWeekDay] || {};
+      log.markModified("addLog");
+    }
     await log.save();
     store.saleLog[yesterdayWeekDay] = {};
     store.addLog[yesterdayWeekDay] = {};
