@@ -138,6 +138,32 @@
       </div>
     </div>
 
+    <div id="error">
+      <span>
+        資料來源主機故障中！！！待修復後將會盡快重新更新資訊！！
+      </span>
+    </div>
+    <style>
+      #error{
+        color:#f00;
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+        width: 100%;
+        z-index: 9990;
+        padding: 5px;
+      }
+      #error span{
+        display: inline-block;
+        background-color: #fff;
+        box-shadow: 0 0 5px #999;
+        padding: 5px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+      }
+    </style>
+
   </body>
   <script src="./assets/map.js"></script>
   <script>
