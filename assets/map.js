@@ -1,14 +1,14 @@
 // socket
 
-const socket = io("https://socketio.weishianglian.com", {
-  transports: ["websocket"]
-});
-socket.on("connect", () => {
-  console.log("socket connect!");
-  socket.on("maskAlert", data => {
-    alert(data);
-  });
-});
+// const socket = io("https://socketio.weishianglian.com", {
+//   transports: ["websocket"]
+// });
+// socket.on("connect", () => {
+//   console.log("socket connect!");
+//   socket.on("maskAlert", data => {
+//     alert(data);
+//   });
+// });
 // socket
 
 const fakeApiData = [
@@ -128,17 +128,24 @@ function getStores(geolocation = []) {
   let distance = mapDistance / 1000;
   if (distance > 5) distance = 5;
   console.log({ lat: location.lat, lng: location.lng, distance });
-  socket.emit(
-    "masks",
-    {
-      lat: location.lat,
-      lng: location.lng,
-      distance
-    },
+  $.get(
+    "https://socketio.weishianglian.com/masks",
+    { lat: location.lat, lng: location.lng, distance },
     data => {
       updateStores(data);
     }
   );
+  // socket.emit(
+  //   "masks",
+  //   {
+  //     lat: location.lat,
+  //     lng: location.lng,
+  //     distance
+  //   },
+  //   data => {
+  //     updateStores(data);
+  //   }
+  // );
 }
 
 function updateStores(stores) {
