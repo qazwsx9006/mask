@@ -22,7 +22,7 @@ const fakeApiData = [
     note: "如遇國定連續假期,藥局公休",
     maskAdult: 20,
     maskChild: 20,
-    updatedAt: "2020/02/04"
+    updatedAt: "2020/02/04",
   },
   {
     code: "5901012383",
@@ -34,8 +34,8 @@ const fakeApiData = [
     note: "",
     maskAdult: 20,
     maskChild: 20,
-    updatedAt: "2020/02/04"
-  }
+    updatedAt: "2020/02/04",
+  },
 ];
 const tiles = L.tileLayer(
   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
@@ -45,7 +45,7 @@ const tiles = L.tileLayer(
     maxZoom: 18,
     id: "mapbox/streets-v11",
     accessToken:
-      "pk.eyJ1IjoicWF6d3N4OTAwNiIsImEiOiJjazY5YzJycHUwZWJnM21xbW4yaXZxYXBvIn0.MUAmAXu6QVP8sgRno-6_mw"
+      "pk.eyJ1IjoicWF6d3N4OTAwNiIsImEiOiJjazY5YzJycHUwZWJnM21xbW4yaXZxYXBvIn0.MUAmAXu6QVP8sgRno-6_mw",
   }
 );
 const latLng = L.latLng(25.0479499, 121.5135961);
@@ -56,7 +56,7 @@ const blueIcon = new L.Icon({
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });
 const greyIcon = new L.Icon({
   iconUrl: "./assets/images/marker-icon-2x-grey.png",
@@ -64,17 +64,17 @@ const greyIcon = new L.Icon({
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });
 const locateIcon = new L.divIcon({
   className: "user-icon",
   html: "<div class='user-icon-marker'></div>",
-  iconSize: [30, 30]
+  iconSize: [30, 30],
 });
 
 let userMarker;
 const markers = {};
-$("#list").on("click", "li", function(e) {
+$("#list").on("click", "li", function (e) {
   const code = $(this).attr("data-id");
   const marker = markers[code];
   if (marker) {
@@ -86,14 +86,14 @@ $("#list").on("click", "li", function(e) {
 var options = {
   enableHighAccuracy: true,
   timeout: 8000,
-  maximumAge: 0
+  maximumAge: 0,
 };
 function success(pos) {
   var crd = pos.coords;
   if (userMarker) mymap.removeLayer(userMarker);
   userMarker = L.marker([crd.latitude, crd.longitude], {
     icon: locateIcon,
-    myCustomId: "user"
+    myCustomId: "user",
   }).addTo(mymap);
 
   mymap.panTo([crd.latitude, crd.longitude]);
@@ -103,23 +103,32 @@ function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
   getStores();
 }
-$("#locate").on("click", function() {
+$("#locate").on("click", function () {
   // mymap.locate({ setView: true, maxZoom: 16 });
   navigator.geolocation.getCurrentPosition(success, error, options);
 });
 $("#search").on("click", () => {
   getStores();
 });
-$("#locate").click();
 
-function getStores(geolocation = []) {
+const urlParams = getParams();
+const { lat, lng, storeId } = urlParams;
+if (lat && lng) {
+  mymap.panTo([lat, lng]);
+  getStores([lat, lng], { storeId });
+} else {
+  $("#locate").click();
+}
+
+function getStores(geolocation = [], params = {}) {
+  const { storeId } = params;
   console.log(geolocation);
   const [lat, lng] = geolocation;
   let location = mymap.getCenter();
   if (lat && lng) {
     location = {
       lat,
-      lng
+      lng,
     };
   }
   // 取得地圖半徑 (km)
@@ -131,8 +140,12 @@ function getStores(geolocation = []) {
   $.get(
     "https://socketio.weishianglian.com/masks",
     { lat: location.lat, lng: location.lng, distance },
-    data => {
+    (data) => {
       updateStores(data);
+      const marker = markers[storeId];
+      if (marker) {
+        marker.openPopup();
+      }
     }
   );
   // socket.emit(
@@ -166,7 +179,7 @@ function updateStores(stores) {
       maskAdult,
       maskChild,
       condition = {},
-      saleLog = {}
+      saleLog = {},
     } = data;
     const { number, common } = condition;
     const near = saleLog.near || {};
@@ -193,14 +206,14 @@ function updateStores(stores) {
 
     var marker = L.marker([lat, lng], {
       icon: outDate ? greyIcon : blueIcon,
-      myCustomId: code
+      myCustomId: code,
     }).addTo(mymap);
-    marker.on("click", function() {
+    marker.on("click", function () {
       const myCustomId = this.options.myCustomId;
       $("#list").animate({
         scrollTop:
           $(`#list li[data-id=${myCustomId}]`).position().top -
-          $("#list li:first").position().top
+          $("#list li:first").position().top,
       });
     });
 
@@ -214,7 +227,7 @@ function updateStores(stores) {
     let logs = { max: 0, startHour: 8, endHour: 8 };
     let targetHour = currentHour;
     if (new Date(nearTime).getHours() == targetHour) targetHour++;
-    Object.keys(saleLogs).map(hour => {
+    Object.keys(saleLogs).map((hour) => {
       if (hour < targetHour) {
         if (logs.endHour < hour) logs.endHour = parseInt(hour);
         todayLogs[hour] = saleLogs[hour];
@@ -301,14 +314,14 @@ function buyCondition() {
 }
 buyCondition();
 
-$("#logo").on("click", function() {
+$("#logo").on("click", function () {
   $("#about").toggle();
 });
-$("#close").on("click", function() {
+$("#close").on("click", function () {
   $("#about").hide();
 });
 
-$("#note").on("click", function(e) {
+$("#note").on("click", function (e) {
   if (e.target.id === "note" || e.target.id === "closeNote") {
     $(this).addClass("small");
   } else {
@@ -316,6 +329,17 @@ $("#note").on("click", function(e) {
   }
 });
 
-$("#closeNews").on("click", function() {
+$("#closeNews").on("click", function () {
   $("#news").hide();
 });
+
+function getParams() {
+  const queryDict = {};
+  location.search
+    .substr(1)
+    .split("&")
+    .forEach(function (item) {
+      queryDict[item.split("=")[0]] = item.split("=")[1];
+    });
+  return queryDict;
+}
