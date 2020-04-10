@@ -302,14 +302,15 @@ function buyCondition() {
     new Date().toLocaleString("en-US", { timeZone: "Asia/Taipei" })
   ).getDay();
   let conditionHtml = "";
-  if (weekDay === 0) {
-    conditionHtml = "不限";
-  } else if (weekDay % 2 === 0) {
-    conditionHtml = "偶數 <span>(0,2,4,6,8)</span>";
-  } else {
-    conditionHtml = "奇數 <span>(1,3,5,7,9)</span>";
-  }
+  // if (weekDay === 0) {
+  //   conditionHtml = "不限";
+  // } else if (weekDay % 2 === 0) {
+  //   conditionHtml = "偶數 <span>(0,2,4,6,8)</span>";
+  // } else {
+  //   conditionHtml = "奇數 <span>(1,3,5,7,9)</span>";
+  // }
 
+  conditionHtml = "不限";
   $("#condition").html(conditionHtml);
 }
 buyCondition();
