@@ -13,8 +13,13 @@
     "url": "https://github.com/qazwsx9006/mask.git"
   },
   "dependencies": {
+    "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.8.11",
     "neat-csv": "^5.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
