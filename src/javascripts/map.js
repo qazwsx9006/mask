@@ -54,10 +54,14 @@ function createMap(params = {}) {
 }
 
 function setUserLocation({ lat, lng }) {
-  if (userMarker) map.removeLayer(userMarker);
-  userMarker = L.marker([lat, lng], {
-    icon: locateIcon,
-  }).addTo(map);
+  if (userMarker) {
+    userMarker.setLatLng([lat, lng]);
+  } else {
+    userMarker = L.marker([lat, lng], {
+      icon: customIcons.greyIcon,
+    }).addTo(map);
+  }
+  return userMarker;
 }
 
 function removeStoreMarkers() {
@@ -69,18 +73,20 @@ function removeStoreMarkers() {
 }
 
 function addStoreMarker(params = {}) {
-  const { lat, lng, icon, id } = params;
+  const { lat, lng, icon, customId } = params;
   const markerIcon = customIcons[icon] || greyIcon;
   const marker = L.marker([lat, lng], {
     icon: markerIcon,
-    myCustomId: id,
+    customId,
   }).addTo(map);
   return marker;
 }
 
 function getRadius() {
   const mapBoundNorthEast = map.getBounds().getNorthEast();
+  // m
   const mapDistance = mapBoundNorthEast.distanceTo(map.getCenter());
+  // km
   return mapDistance / 1000;
 }
 
