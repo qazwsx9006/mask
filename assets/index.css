@@ -370,6 +370,7 @@ div {
   list-style: none;
   height: 50px;
   width: 90%;
+  min-width: 200px;
   font-size: 0;
   position: relative;
 }
@@ -391,22 +392,27 @@ div {
 }
 .chart li {
   display: inline-block;
-  width: 12.5%;
+  width: 6.66666%;
   height: 50%;
   background: #e57b7f;
   vertical-align: bottom;
   position: relative;
 }
+
 .chart li span:before {
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  font-size: 0.8rem;
-  display: block;
+  display: none;
+  font-size: 0.7rem;
   text-align: center;
   content: attr(title);
   word-wrap: break-word;
+}
+
+.chart li:nth-child(odd) span:before {
+  display: inline-block;
 }
 
 .user-icon {

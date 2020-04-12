@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52133868-8"></script>
@@ -25,20 +25,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <title>口罩幫手</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-      crossorigin=""
-    />
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script
-      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-      crossorigin=""
-    ></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css" />
+    <script src="./node_modules/leaflet/dist/leaflet-src.js"></script>
     <link rel="stylesheet" href="./assets/index.css" />
     <link rel="stylesheet" href="./assets/mobile.css" />
   </head>
@@ -167,44 +156,5 @@
     </style>
 
   </body>
-  <script src="./assets/map.js"></script>
-  <script>
-    // https://imgur.com/a/CKt17ce
-    imageLists = [
-      'https://i.imgur.com/jQsJk5C.jpg',
-      'https://i.imgur.com/xaMWo8F.png',
-      'https://i.imgur.com/7ZSglpc.jpg',
-      'https://i.imgur.com/EckthZB.png',
-      'https://i.imgur.com/cP2ru0G.jpg',
-      'https://i.imgur.com/QNl3Yh7.jpg',
-      'https://i.imgur.com/LMdfruc.jpg',
-      'https://i.imgur.com/ob4nIJU.jpg'
-    ]
-
-    for(let imageUrl of imageLists){
-      const li = `<li>
-            <div class="avatar">
-              幫手
-            </div>
-            <div class="msgBubble">
-              <div class="bubble">
-                <img src="${imageUrl}" alt="">
-              </div>
-            </div>
-          </li>`
-      $('.msgWindow').append(li)
-    }
-    const latestNewsId = '1585582107822'
-    const latestSeenNews = localStorage.getItem('qazwsx9006Mask')
-    if(!latestSeenNews || latestSeenNews != latestNewsId){
-      $('#newsList .tipLight').removeClass('close')
-    }
-    $("#newsList").on("click", function() {
-      $("#news").show();
-      localStorage.setItem('qazwsx9006Mask', latestNewsId)
-      $('#newsList .tipLight').addClass('close')
-    });
-    
-
-  </script>
+  <script src="./dist/index.bundle.js"></script>
 </html>
