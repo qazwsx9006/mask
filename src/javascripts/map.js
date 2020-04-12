@@ -70,10 +70,11 @@ module.exports = function initMap(params = {}) {
   }
 
   function removeStoreMarkers() {
-    for (const marker of Object.values(markers)) {
-      map.removeLayer(marker);
+    for (const storeId of Object.keys(markers)) {
+      const marker = markers[storeId];
+      if (marker) map.removeLayer(marker);
+      markers[storeId] = null;
     }
-    markers = {};
     return markers;
   }
 

@@ -18,6 +18,7 @@ async function updateStores(params = {}) {
   $("#list").html("");
   map.removeStoreMarkers();
   for (const store of stores) {
+    console.log(store);
     updateStore(store, { now });
   }
 
@@ -33,14 +34,17 @@ function updateStore(store, { now }) {
     lat,
     openTime,
     note,
-    maskAdult,
-    maskChild,
     condition = {},
     saleLog = {},
   } = store;
+  let { maskAdult, maskChild } = store;
   const updatedAt = new Date(store.updatedAt);
   let isOutDate = false;
-  if ((new Date() - updatedAt) / 1000 > 60 * 60 * 24) isOutDate = true;
+  if ((now - updatedAt) / 1000 > 60 * 60 * 24) isOutDate = true;
+  if ((now - updatedAt) / 1000 > 25 * 60) {
+    maskAdult = 0;
+    maskChild = 0;
+  }
 
   const marker = map.addStoreMarker({
     lat,
