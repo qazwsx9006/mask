@@ -1,23 +1,20 @@
 {
   "name": "mask",
   "version": "1.0.0",
-  "description": "",
+  "description": "台灣口罩地圖。協助使用者查詢附近口罩販售情形。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "author": "",
+  "author": "Tseng MingYu",
   "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/qazwsx9006/mask.git"
   },
   "dependencies": {
-    "leaflet": "^1.6.0",
-    "lodash": "^4.17.15",
-    "mongoose": "^5.8.11",
-    "neat-csv": "^5.1.0"
+    "leaflet": "^1.6.0"
   },
   "devDependencies": {
     "webpack": "^4.42.1",
